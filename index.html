@@ -1,0 +1,1314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="description" content="Apex TUTORIAL - Official JAMB Practice Platform with 50 Extremely Hard Questions">
+    <meta name="keywords" content="JAMB, JAMB Practice, JAMB Questions, Nigerian JAMB, Apex TUTORIAL">
+    <meta name="author" content="Apex TUTORIAL">
+    <title>Apex TUTORIAL - JAMB Practice</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* === BASE STYLES === */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        :root {
+            --primary-red: #e63946;
+            --primary-yellow: #ffb703;
+            --dark-red: #d90429;
+            --dark-yellow: #ff9e00;
+            --light-bg: #f8f9fa;
+            --dark-text: #212529;
+            --white: #ffffff;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        body {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            min-height: 100vh;
+            color: var(--dark-text);
+            line-height: 1.6;
+            overflow-x: hidden;
+            touch-action: manipulation;
+        }
+
+        /* === CORE LAYOUT === */
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+            background: var(--white);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            position: relative;
+            min-height: 100vh;
+        }
+
+        /* === LOGIN PAGE === */
+        .login-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+            text-align: center;
+            min-height: 100vh;
+        }
+
+        .logo {
+            margin-bottom: 40px;
+            padding: 15px 0;
+            border-bottom: 2px solid var(--primary-yellow);
+        }
+
+        .logo h1 {
+            color: var(--primary-red);
+            font-size: 2.2rem;
+            margin-bottom: 5px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        .logo p {
+            color: var(--primary-yellow);
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-top: 5px;
+        }
+
+        .login-form {
+            width: 100%;
+            max-width: 350px;
+            background: var(--white);
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--dark-text);
+            font-weight: 500;
+            font-size: 0.95rem;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 16px;
+            border: 2px solid #ddd;
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: var(--transition);
+            font-weight: 500;
+            background: #fafafa;
+        }
+
+        .form-control:focus {
+            border-color: var(--primary-red);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(230, 57, 70, 0.2);
+            background: white;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 16px;
+            background: var(--primary-red);
+            color: var(--white);
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            margin-top: 10px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .btn:hover {
+            background: var(--dark-red);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(230, 57, 70, 0.3);
+        }
+
+        .error-message {
+            color: var(--primary-red);
+            text-align: center;
+            margin-top: 15px;
+            font-weight: 500;
+            font-size: 0.9rem;
+            display: none;
+            animation: shake 0.5s ease-in-out;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            20%, 60% { transform: translateX(-5px); }
+            40%, 80% { transform: translateX(5px); }
+        }
+
+        /* === QUIZ CONTAINER === */
+        .quiz-container {
+            display: none;
+            padding: 20px;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        .quiz-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--primary-yellow);
+        }
+
+        .quiz-title {
+            color: var(--primary-red);
+            font-size: 1.5rem;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        .timer {
+            background: var(--primary-yellow);
+            color: var(--dark-text);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .question-container {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            margin-bottom: 25px;
+            border-left: 5px solid var(--primary-red);
+            animation: slideIn 0.5s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .subject-tag {
+            display: inline-block;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            text-transform: capitalize;
+        }
+
+        .english-tag {
+            background: rgba(230, 57, 70, 0.15);
+            color: var(--primary-red);
+        }
+
+        .biology-tag {
+            background: rgba(40, 167, 69, 0.15);
+            color: #28a745;
+        }
+
+        .chemistry-tag {
+            background: rgba(0, 123, 255, 0.15);
+            color: #007bff;
+        }
+
+        .physics-tag {
+            background: rgba(111, 66, 193, 0.15);
+            color: #6f42c1;
+        }
+
+        .maths-tag {
+            background: rgba(255, 193, 7, 0.15);
+            color: #ffc107;
+        }
+
+        .question-number {
+            color: var(--primary-red);
+            font-weight: 600;
+            margin-bottom: 12px;
+            font-size: 1rem;
+        }
+
+        .question-text {
+            font-size: 1.2rem;
+            margin-bottom: 24px;
+            line-height: 1.7;
+            color: #333;
+        }
+
+        .question-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin: 15px 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .options-container {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .option {
+            padding: 16px;
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            font-size: 1rem;
+            font-weight: 500;
+            position: relative;
+        }
+
+        .option:hover {
+            background: #fff2cc;
+            border-color: var(--primary-yellow);
+            transform: translateY(-2px);
+        }
+
+        .option.selected {
+            background: #fff2cc;
+            border-color: var(--primary-yellow);
+            box-shadow: 0 0 0 3px rgba(255, 183, 3, 0.3);
+        }
+
+        .option input[type="radio"] {
+            margin-right: 12px;
+            cursor: pointer;
+            accent-color: var(--primary-red);
+            width: 18px;
+            height: 18px;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+
+        .btn-nav {
+            padding: 14px 20px;
+            background: var(--primary-red);
+            color: var(--white);
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            flex: 1;
+            margin: 0 5px;
+        }
+
+        .btn-nav:hover {
+            background: var(--dark-red);
+            transform: translateY(-2px);
+        }
+
+        .btn-nav:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-next {
+            background: var(--primary-yellow);
+            color: var(--dark-text);
+        }
+
+        .btn-next:hover {
+            background: var(--dark-yellow);
+        }
+
+        .progress-container {
+            margin-top: 20px;
+            background: #e9ecef;
+            border-radius: 10px;
+            height: 8px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: var(--primary-red);
+            width: 0%;
+            transition: width 0.4s;
+        }
+
+        /* === RESULT PAGE === */
+        .result-container {
+            display: none;
+            padding: 40px 20px;
+            text-align: center;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .result-icon {
+            font-size: 4rem;
+            color: var(--primary-red);
+            margin-bottom: 20px;
+        }
+
+        .result-title {
+            font-size: 2rem;
+            color: var(--primary-red);
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .result-score {
+            font-size: 4rem;
+            font-weight: 800;
+            color: var(--primary-yellow);
+            margin: 20px 0;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .result-message {
+            font-size: 1.2rem;
+            color: var(--dark-text);
+            margin-bottom: 30px;
+            line-height: 1.7;
+            max-width: 400px;
+        }
+
+        .btn-restart {
+            background: var(--primary-red);
+            color: var(--white);
+            border: none;
+            padding: 16px 30px;
+            font-size: 1.1rem;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 600;
+            display: inline-block;
+            margin: 10px 5px;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+        }
+
+        .btn-restart:hover {
+            background: var(--dark-red);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(230, 57, 70, 0.3);
+        }
+
+        /* === MOBILE OPTIMIZATION === */
+        @media (max-width: 480px) {
+            .logo h1 {
+                font-size: 2rem;
+            }
+            .quiz-title {
+                font-size: 1.3rem;
+            }
+            .question-text {
+                font-size: 1.1rem;
+            }
+            .result-title {
+                font-size: 1.8rem;
+            }
+            .result-score {
+                font-size: 3.5rem;
+            }
+            .btn-nav {
+                font-size: 0.95rem;
+                padding: 12px 16px;
+            }
+        }
+
+        /* === PERFORMANCE & ACCESSIBILITY === */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0,0,0,0);
+            white-space: nowrap;
+            border: 0;
+        }
+
+        /* === FAVICON & PWA === */
+        .favicon {
+            width: 48px;
+            height: 48px;
+            display: inline-block;
+            background: var(--primary-red);
+            border-radius: 50%;
+            margin-right: 10px;
+            color: white;
+            font-weight: bold;
+            line-height: 48px;
+            text-align: center;
+            font-size: 1.2rem;
+        }
+
+        /* === ANIMATIONS === */
+        .fade-in {
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        /* === FOOTER === */
+        .footer {
+            text-align: center;
+            font-size: 0.8rem;
+            color: #888;
+            margin-top: 30px;
+            padding: 10px;
+            opacity: 0.7;
+        }
+
+        /* === LOADING STATE === */
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 40px;
+            color: var(--primary-red);
+        }
+
+        .loading-spinner {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            border: 4px solid rgba(230, 57, 70, 0.3);
+            border-radius: 50%;
+            border-top-color: var(--primary-red);
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* === DIFFICULTY INDICATOR === */
+        .difficulty {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            margin-left: 10px;
+            color: white;
+        }
+
+        .difficulty-extreme {
+            background: #d90429;
+        }
+
+        /* === FORMULA STYLING === */
+        .formula {
+            font-family: 'Cambria Math', serif;
+            font-size: 1.3rem;
+            color: var(--dark-red);
+            margin: 10px 0;
+            padding: 8px 12px;
+            background: #fff8e1;
+            border-radius: 6px;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Login Page -->
+        <div class="login-container" id="loginPage">
+            <div class="logo">
+                <div class="favicon">A</div>
+                <h1>Apex TUTORIAL</h1>
+                <p>Extreme JAMB Practice Platform</p>
+            </div>
+            
+            <div class="login-form">
+                <div class="form-group">
+                    <label for="password">Enter Password</label>
+                    <input type="password" id="password" class="form-control" placeholder="apex123" autocomplete="current-password">
+                </div>
+                
+                <button id="loginBtn" class="btn">Access Extreme Quiz</button>
+                <div class="error-message" id="errorMessage">
+                    Incorrect password. Please try again.
+                </div>
+            </div>
+            <div class="footer">
+                © 2025 Apex TUTORIAL | Extreme JAMB Practice
+            </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-container" id="quizContainer">
+            <div class="quiz-header">
+                <h2 class="quiz-title">Extreme JAMB Practice Test</h2>
+                <div class="timer" id="timer">00:30:00</div>
+            </div>
+            
+            <div class="question-container">
+                <span class="subject-tag" id="subjectTag">English</span>
+                <span class="difficulty difficulty-extreme">EXTREME</span>
+                <div class="question-number">Question <span id="currentQuestion">1</span> of <span id="totalQuestions">50</span></div>
+                <div class="question-text" id="questionText">Loading question...</div>
+                <img id="questionImage" class="question-image" style="display: none;">
+                
+                <div class="options-container" id="optionsContainer">
+                    <!-- Options will be populated by JavaScript -->
+                </div>
+            </div>
+            
+            <div class="progress-container">
+                <div class="progress-bar" id="progressBar"></div>
+            </div>
+            
+            <div class="navigation">
+                <button class="btn-nav" id="prevBtn" disabled>Previous</button>
+                <button class="btn-nav btn-next" id="nextBtn">Next</button>
+            </div>
+        </div>
+
+        <!-- Result Page -->
+        <div class="result-container" id="resultContainer">
+            <div class="result-icon">
+                <i class="fas fa-graduation-cap"></i>
+            </div>
+            <h2 class="result-title">Extreme Quiz Completed!</h2>
+            <div class="result-score" id="resultScore">0%</div>
+            <p class="result-message" id="resultMessage">Your performance summary will appear here...</p>
+            <button class="btn-restart" id="restartBtn">Restart Extreme Quiz</button>
+            <button class="btn-restart" id="emailBtn">Send Score to Email</button>
+            <div class="footer">
+                © 2025 Apex TUTORIAL | Extreme JAMB Practice
+            </div>
+        </div>
+
+        <script>
+            // === QUIZ DATA WITH EXTREMELY HARD QUESTIONS AND IMAGES ===
+            const quizData = [
+                // English (12 questions - extremely hard)
+                { 
+                    subject: "english", 
+                    question: "In the excerpt below, the phrase 'the cerulean expanse' is an example of:", 
+                    image: "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MDAiIGhlaWdodD0iMjAwIiB2aWV3Qm94PSIwIDAgNDAwIDIwMCI+PHJlY3Qgd2lkdGg9IjQwMCIgaGVpZ2h0PSIyMDAiIGZpbGw9IiM4N2NlZmEiLz48dGV4dCB4PSIxOTUiIHk9IjEwNSIgZm9udC1mYW1pbHk9IkNhbGlicmkiIGZvbnQtc2l6ZT0iMTQiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZpbGw9IiMwMDAiPiJUaGUgY2VydWxlYW4gZXhwYW5zZSBlbnZlbG9wZWQgdGhlIHNob3JlLiI8L3RleHQ+PC9zdmc+",
+                    options: ["Metaphor", "Simile", "Allusion", "Hyperbole"], 
+                    answer: 0 
+                },
+                { 
+                    subject: "english", 
+                    question: "The narrative perspective that reveals the thoughts of multiple characters is:", 
+                    options: ["First-person limited", "Third-person omniscient", "Second-person objective", "Third-person limited"], 
+                    answer: 1 
+                },
+                { 
+                    subject: "english", 
+                    question: "In prosody, what is the metrical foot with two unstressed syllables followed by a stressed syllable?", 
+                    options: ["Dactyl", "Anapest", "Iamb", "Trochee"], 
+                    answer: 1 
+                },
+                { 
+                    subject: "english", 
+                    question: "Which literary device is exemplified in: 'The wind howled its despair across the barren plains'?", 
+                    options: ["Personification", "Onomatopoeia", "Metonymy", "Synecdoche"], 
+                    answer: 0 
+                },
+                { 
+                    subject: "english", 
+                    question: "The rhetorical device where a word is repeated at the beginning of successive clauses is:", 
+                    options: ["Epistrophe", "Anaphora", "Chiasmus", "Asyndeton"], 
+                    answer: 1 
+                },
+                { 
+                    subject: "english", 
+                    question: "In Shakespearean sonnets, the traditional rhyme scheme is:", 
+                    options: ["ABAB CDCD EFEF GG", "ABBA ABBA CDE CDE", "ABAB ABAB CDCD EE", "ABAB BCBC CDCD EE"], 
+                    answer: 0 
+                },
+                { 
+                    subject: "english", 
+                    question: "The term for a word that imitates the sound it represents is:", 
+                    options: ["Alliteration", "Assonance", "Consonance", "Onomatopoeia"], 
+                    answer: 3 
+                },
+                { 
+                    subject: "english", 
+                    question: "In the sentence 'She walks as if she owns the earth,' the underlined clause is:", 
+                    options: ["Adverbial clause", "Adjectival clause", "Noun clause", "Relative clause"], 
+                    answer: 0 
+                },
+                { 
+                    subject: "english", 
+                    question: "The literary period characterized by rationalism and order is:", 
+                    options: ["Romanticism", "Modernism", "Neoclassicism", "Victorianism"], 
+                    answer: 2 
+                },
+                { 
+                    subject: "english", 
+                    question: "The rhetorical question: 'Are not his deeds greater than his words?' functions primarily to:", 
+                    options: ["Seek information", "Express doubt", "Emphasize a point", "Challenge the audience"], 
+                    answer: 2 
+                },
+                { 
+                    subject: "english", 
+                    question: "In the phrase 'the pen is mightier than the sword,' 'pen' and 'sword' are examples of:", 
+                    options: ["Metaphors", "Symbols", "Metonymy", "Synecdoche"], 
+                    answer: 2 
+                },
+                { 
+                    subject: "english", 
+                    question: "The narrative technique that presents events out of chronological order is:", 
+                    options: ["Stream of consciousness", "In medias res", "Nonlinear narrative", "Frame narrative"], 
+                    answer: 2 
+                },
+                
+                // Biology (12 questions - extremely hard)
+                { 
+                    subject: "biology", 
+                    question: "Which enzyme is responsible for unwinding the DNA double helix during replication?", 
+                    options: ["DNA polymerase", "Helicase", "Primase", "Ligase"], 
+                    answer: 1 
+                },
+                { 
+                    subject: "biology", 
+                    question: "In the Calvin cycle, how many molecules of ATP are required to produce one molecule of glucose?", 
+                    options: ["6", "12", "18", "24"], 
+                    answer: 2 
+                },
+                { 
+                    subject: "biology", 
+                    question: "Which of the following is the correct sequence of events in non-cyclic photophosphorylation?", 
+                    image: "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MDAiIGhlaWdodD0iMTUwIiB2aWV3Qm94PSIwIDAgNDAwIDE1MCI+PHJlY3Qgd2lkdGg9IjQwMCIgaGVpZ2h0PSIxNTAiIGZpbGw9IiNmNWY1ZjUiLz48dGV4dCB4PSI1MCIgeT0iNDAiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxMiIgZmlsbD0iIzAwMCI+UEhPVE9TWVNURU0gSTwvdGV4dD48dGV4dCB4PSI1MCIgeT0iODAiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxMiIgZmlsbD0iIzAwMCI+UEhPVE9TWVNURU0gSUk8L3RleHQ+PHRleHQgeD0iMjAwIiB5PSI0MCIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjEyIiBmaWxsPSIjMDAwIj5FRkxVWE9GIHJlc2lyZWQ8L3RleHQ+PHRleHQgeD0iMjAwIiB5PSI4MCIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjEyIiBmaWxsPSIjMDAwIj5OQURNUEg8L3RleHQ+PHRleHQgeD0iMzUwIiB5PSI0MCIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjEyIiBmaWxsPSIjMDAwIj5BVERQPC90ZXh0Pjx0ZXh0IHg9IjM1MCIgeT0iODAiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxMiIgZmlsbD0iIzAwMCI+TkFESFByb2R1Y3Rpb248L3RleHQ+PHBvbHlsaW5lIHBvaW50cz0iNTAsNDUgMTUwLDQ1IiBzdHJva2U9IiMwMDAiIHN0cm9rZS13aWR0aD0iMiIgZmlsbD0ibm9uZSIvPjxwb2x5bGluZSBwb2ludHM9IjUwLDg1IDE1MCw4NSIgc3Ryb2tlPSIjMDAwIiBzdHJva2Utd2lkdGg9IjIiIGZpbGw9Im5vbmUiLz48cG9seWxpbmUgcG9pbnRzPSIxNTAsNDUgMjAwLDQ1IiBzdHJva2U9IiMwMDAiIHN0cm9rZS13aWR0aD0iMiIgZmlsbD0ibm9uZSIvPjxwb2x5bGluZSBwb2ludHM9IjE1MCw4NSAyMDAsODUiIHN0cm9rZT0iIzAwMCIgc3Ryb2tlLXdpZHRoPSIyIiBmaWxsPSJub25lIi8+PHBvbHlsaW5lIHBvaW50cz0iMjAwLDQ1IDI1MCw0NSIgc3Ryb2tlPSIjMDAwIiBzdHJva2Utd2lkdGg9IjIiIGZpbGw9Im5vbmUiLz48cG9seWxpbmUgcG9pbnRzPSIyMDAsODUgMjUwLDg1IiBzdHJva2U9IiMwMDAiIHN0cm9rZS13aWR0aD0iMiIgZmlsbD0ibm9uZSIvPjxwb2x5bGluZSBwb2ludHM9IjI1MCw0NSAzNTAsNDUiIHN0cm9rZT0iIzAwMCIgc3Ryb2tlLXdpZHRoPSIyIiBmaWxsPSJub25lIi8+PHBvbHlsaW5lIHBvaW50cz0iMjUwLDg1IDM1MCw4NSIgc3Ryb2tlPSIjMDAwIiBzdHJva2Utd2lkdGg9IjIiIGZpbGw9Im5vbmUiLz48L3N2Zz4=",
+                    options: ["PSII → PSI → ATP production", "PSI → PSII → ATP production", "PSII → ATP production → PSI", "PSI → ATP production → PSII"], 
+                    answer: 0 
+                },
+                { 
+                    subject: "biology", 
+                    question: "The Bohr effect describes the relationship between:", 
+                    options: ["Oxygen and carbon dioxide binding to hemoglobin", "Oxygen and pH in hemoglobin binding", "Oxygen and temperature effects on hemoglobin", "Oxygen and 2,3-BPG interactions"], 
+                    answer: 1 
+                },
+                { 
+                    subject: "biology", 
+                    question: "Which hormone is responsible for the 'fight or flight' response?", 
+                    options: ["Insulin", "Cortisol", "Adrenaline", "Thyroxine"], 
+                    answer: 2 
+                },
+                { 
+                    subject: "biology", 
+                    question: "In the electron transport chain, the final electron acceptor is:", 
+                    options: ["Oxygen", "NAD+", "FAD", "Water"], 
+                    answer: 0 
+                },
+                { 
+                    subject: "biology", 
+                    question: "The enzyme that catalyzes the conversion of carbon dioxide to bicarbonate in red blood cells is:", 
+                    options: ["Carbonic anhydrase", "Hexokinase", "Lactate dehydrogenase", "Phosphofructokinase"], 
+                    answer: 0 
+                },
+                { 
+                    subject: "biology", 
+                    question: "During which phase of mitosis do chromosomes align at the equator?", 
+                    options: ["Prophase", "Metaphase", "Anaphase", "Telophase"], 
+                    answer: 1 
+                },
+                { 
+                    subject: "biology", 
+                    question: "The genetic disorder caused by trisomy 21 is:", 
+                    options: ["Klinefelter syndrome", "Turner syndrome", "Down syndrome", "Edwards syndrome"], 
+                    answer: 2 
+                },
+                { 
+                    subject: "biology", 
+                    question: "Which structure in the nephron is responsible for the reabsorption of glucose?", 
+                    options: ["Glomerulus", "Proximal convoluted tubule", "Loop of Henle", "Distal convoluted tubule"], 
+                    answer: 1 
+                },
+                { 
+                    subject: "biology", 
+                    question: "The hormone that stimulates uterine contractions during childbirth is:", 
+                    options: ["Oxytocin", "Prolactin", "Estrogen", "Progesterone"], 
+                    answer: 0 
+                },
+                { 
+                    subject: "biology", 
+                    question: "In the Krebs cycle, which molecule is both a reactant and a product?", 
+                    options: ["Acetyl CoA", "Citrate", "Oxaloacetate", "ATP"], 
+                    answer: 2 
+                },
+                
+                // Chemistry (13 questions - extremely hard)
+                { 
+                    subject: "chemistry", 
+                    question: "What is the oxidation state of chromium in K₂Cr₂O₇?", 
+                    options: ["+2", "+3", "+6", "+7"], 
+                    answer: 2 
+                },
+                { 
+                    subject: "chemistry", 
+                    question: "For the reaction: N₂(g) + 3H₂(g) ⇌ 2NH₃(g), ΔH = -92 kJ/mol. What happens to the equilibrium when temperature increases?", 
+                    options: ["Shifts to the right", "Shifts to the left", "No change", "Reaction stops"], 
+                    answer: 1 
+                },
+                { 
+                    subject: "chemistry", 
+                    question: "Which of the following has the highest boiling point?", 
+                    options: ["CH₄", "NH₃", "H₂O", "HF"], 
+                    answer: 2 
+                },
+                { 
+                    subject: "chemistry", 
+                    question: "What is the pH of a 0.01 M solution of HCl?", 
+                    options: ["1", "2", "7", "12"], 
+                    answer: 1 
+                },
+                { 
+                    subject: "chemistry", 
+                    question: "The half-life of a first-order reaction is independent of:", 
+                    options: ["Initial concentration", "Rate constant", "Temperature", "Catalyst presence"], 
+                    answer: 0 
+                },
+                { 
+                    subject: "chemistry", 
+                    question: "In the electrolysis of molten NaCl, what is produced at the cathode?", 
+                    options: ["Na⁺", "Cl₂", "Na", "Cl⁻"], 
+                    answer: 2 
+                },
+                { 
+                    subject: "chemistry", 
+                    question: "Which hybrid orbital is found in a molecule with trigonal bipyramidal geometry?", 
+                    options: ["sp³", "sp²", "sp³d", "sp³d²"], 
+                    answer: 2 
+                },
+                { 
+                    subject: "chemistry", 
+                    question: "The IUPAC name for CH₃CH₂C(CH₃)₂CH₂CH₃ is:", 
+                    options: ["2,2-Dimethylpentane", "3,3-Dimethylpentane", "2-Methylhexane", "3-Methylhexane"], 
+                    answer: 1 
+                },
+                { 
+                    subject: "chemistry", 
+                    question: "What is the electron configuration of Cr (Z=24)?", 
+                    options: ["[Ar] 4s² 3d⁴", "[Ar] 4s¹ 3d⁵", "[Ar] 4s² 3d⁵", "[Ar] 4s¹ 3d⁴"], 
+                    answer: 1 
+                },
+                { 
+                    subject: "chemistry", 
+                    question: "Which of the following is NOT a colligative property?", 
+                    options: ["Vapor pressure lowering", "Boiling point elevation", "Freezing point depression", "Surface tension"], 
+                    answer: 3 
+                },
+                { 
+                    subject: "chemistry", 
+                    question: "The rate law for a reaction is rate = k[A]²[B]. What is the overall order of the reaction?", 
+                    options: ["1", "2", "3", "4"], 
+                    answer: 2 
+                },
+                { 
+                    subject: "chemistry", 
+                    question: "In the reaction: Zn + Cu²⁺ → Zn²⁺ + Cu, which species is oxidized?", 
+                    options: ["Zn", "Cu²⁺", "Zn²⁺", "Cu"], 
+                    answer: 0 
+                },
+                { 
+                    subject: "chemistry", 
+                    question: "The maximum number of electrons in the n=3 shell is:", 
+                    options: ["8", "18", "32", "2"], 
+                    answer: 1 
+                },
+                
+                // Physics (13 questions - extremely hard)
+                { 
+                    subject: "physics", 
+                    question: "A particle moves in a circular path with constant speed. Which of the following is constant?", 
+                    options: ["Velocity", "Acceleration", "Kinetic energy", "Momentum"], 
+                    answer: 2 
+                },
+                { 
+                    subject: "physics", 
+                    question: "What is the de Broglie wavelength of an electron accelerated through 100V?", 
+                    options: ["0.123 nm", "1.23 nm", "12.3 nm", "123 nm"], 
+                    answer: 0 
+                },
+                { 
+                    subject: "physics", 
+                    question: "In a transformer, the primary coil has 100 turns and the secondary has 500 turns. If the input voltage is 12V, what is the output voltage?", 
+                    options: ["2.4V", "60V", "120V", "600V"], 
+                    answer: 1 
+                },
+                { 
+                    subject: "physics", 
+                    question: "The work function of a metal is 3.0 eV. What is the maximum kinetic energy of photoelectrons emitted when light of wavelength 200 nm strikes the metal? (h = 4.14 × 10⁻¹⁵ eV·s, c = 3 × 10⁸ m/s)", 
+                    options: ["1.2 eV", "3.2 eV", "6.2 eV", "9.2 eV"], 
+                    answer: 1 
+                },
+                { 
+                    subject: "physics", 
+                    question: "A Carnot engine operates between 500K and 300K. What is its efficiency?", 
+                    options: ["20%", "40%", "60%", "80%"], 
+                    answer: 1 
+                },
+                { 
+                    subject: "physics", 
+                    question: "Two vectors A and B have magnitudes 3 and 4 respectively. If their dot product is 6, what is the angle between them?", 
+                    options: ["0°", "30°", "60°", "90°"], 
+                    answer: 2 
+                },
+                { 
+                    subject: "physics", 
+                    question: "In an AC circuit, if the current leads the voltage by 90°, the circuit contains:", 
+                    options: ["Only resistance", "Only inductance", "Only capacitance", "Both resistance and capacitance"], 
+                    answer: 2 
+                },
+                { 
+                    subject: "physics", 
+                    question: "The rest mass energy of an electron is approximately:", 
+                    options: ["0.511 eV", "511 eV", "0.511 MeV", "511 MeV"], 
+                    answer: 2 
+                },
+                { 
+                    subject: "physics", 
+                    question: "A satellite is in a circular orbit around Earth. If its orbital radius is doubled, its period becomes:", 
+                    options: ["√2 times", "2 times", "2√2 times", "4 times"], 
+                    answer: 2 
+                },
+                { 
+                    subject: "physics", 
+                    question: "In a double-slit experiment, the distance between adjacent bright fringes is proportional to:", 
+                    options: ["Wavelength", "Slit separation", "Screen distance", "All of the above"], 
+                    answer: 3 
+                },
+                { 
+                    subject: "physics", 
+                    question: "What is the equivalent resistance between points A and B in the circuit below?", 
+                    image: "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMTUwIiB2aWV3Qm94PSIwIDAgMzAwIDE1MCI+PHJlY3Qgd2lkdGg9IjMwMCIgaGVpZ2h0PSIxNTAiIGZpbGw9IiNmNWY1ZjUiLz48Y2lyY2xlIGN4PSI1MCIgY3k9IjUwIiByPSIyMCIgZmlsbD0iI2ZmZiIgc3Ryb2tlPSIjMDAwIi8+PHRleHQgeD0iNTAiIHk9IjU1IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTQiIGZpbGw9IiMwMDAiPkE8L3RleHQ+PGNpcmNsZSBjeD0iMjUwIiBjeT0iNTAiIHI9IjIwIiBmaWxsPSIjZmZmIiBzdHJva2U9IiMwMDAiLz48dGV4dCB4PSIyNTAiIHk9IjU1IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTQiIGZpbGw9IiMwMDAiPkI8L3RleHQ+PHBhdGggZD0iTTcwLDUwIEgxMzAgTTE3MCw1MCBIMjMwIE0xMzAsOTAgSDE3MCBNOCA1MCBMOCA5MCBMMjQyLDkwIEwyNDIsNTAiIHN0cm9rZT0iIzAwMCIgc3Ryb2tlLXdpZHRoPSIyIi8+PHRleHQgeD0iMTAwIiB5PSI1NSIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjEyIiBmaWxsPSIjMDAwIj5SNCA9IDEwΩwvdGV4dD48dGV4dCB4PSIyMDAiIHk9IjU1IiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTIiIGZpbGw9IiMwMDAiPlIyID0gMTAΩwvdGV4dD48dGV4dCB4PSIxNTAiIHk9Ijk1IiBmbHVuLTZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTIiIGZpbGw9IiMwMDAiPlIzID0gMTAΩwvdGV4dD48dGV4dCB4PSIxNTAiIHk9IjE1IiBmbHVuLTZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTIiIGZpbGw9IiMwMDAiPlIxID0gMTAΩwvdGV4dD48L3N2Zz4=",
+                    options: ["5Ω", "7.5Ω", "10Ω", "15Ω"], 
+                    answer: 1 
+                },
+                { 
+                    subject: "physics", 
+                    question: "The uncertainty principle states that:", 
+                    options: ["Δx·Δp ≥ h/4π", "ΔE·Δt ≥ h/4π", "Both a and b", "Neither a nor b"], 
+                    answer: 2 
+                },
+                { 
+                    subject: "physics", 
+                    question: "A body of mass 2kg moving at 3m/s collides with a stationary body of mass 1kg. If they stick together, their common velocity is:", 
+                    options: ["1 m/s", "2 m/s", "3 m/s", "4 m/s"], 
+                    answer: 1 
+                },
+                
+                // Mathematics (Added for extreme difficulty - 10 questions)
+                { 
+                    subject: "maths", 
+                    question: "What is the derivative of f(x) = eˣsin(x)?", 
+                    options: ["eˣsin(x)", "eˣcos(x)", "eˣ(sin(x) + cos(x))", "eˣ(sin(x) - cos(x))"], 
+                    answer: 2 
+                },
+                { 
+                    subject: "maths", 
+                    question: "Solve for x: log₂(x) + log₂(x-2) = 3", 
+                    options: ["2", "4", "6", "8"], 
+                    answer: 1 
+                },
+                { 
+                    subject: "maths", 
+                    question: "The integral of x·eˣ dx is:", 
+                    options: ["eˣ(x - 1) + C", "eˣ(x + 1) + C", "eˣ + C", "x²eˣ/2 + C"], 
+                    answer: 0 
+                },
+                { 
+                    subject: "maths", 
+                    question: "Find the sum to infinity of the geometric series: 8 + 4 + 2 + 1 + ...", 
+                    options: ["8", "12", "16", "24"], 
+                    answer: 2 
+                },
+                { 
+                    subject: "maths", 
+                    question: "The determinant of the matrix [[2, 3], [1, 4]] is:", 
+                    options: ["5", "7", "8", "11"], 
+                    answer: 0 
+                },
+                { 
+                    subject: "maths", 
+                    question: "If sinθ = 3/5 and θ is acute, then cos(2θ) = ?", 
+                    options: ["7/25", "16/25", "24/25", "1"], 
+                    answer: 0 
+                },
+                { 
+                    subject: "maths", 
+                    question: "The equation of the line perpendicular to y = 2x + 3 passing through (1, 4) is:", 
+                    options: ["y = -1/2x + 9/2", "y = 2x + 2", "y = -2x + 6", "y = 1/2x + 7/2"], 
+                    answer: 0 
+                },
+                { 
+                    subject: "maths", 
+                    question: "The complex number (1+i)⁴ equals:", 
+                    options: ["4i", "-4", "4", "-4i"], 
+                    answer: 1 
+                },
+                { 
+                    subject: "maths", 
+                    question: "The probability of getting exactly two heads when three fair coins are tossed is:", 
+                    options: ["1/8", "1/4", "3/8", "1/2"], 
+                    answer: 2 
+                },
+                { 
+                    subject: "maths", 
+                    question: "The roots of the equation x² - 4x + 7 = 0 are:", 
+                    options: ["Real and equal", "Real and distinct", "Complex conjugates", "Pure imaginary"], 
+                    answer: 2 
+                }
+            ];
+
+            // === DOM ELEMENTS ===
+            const loginPage = document.getElementById('loginPage');
+            const quizContainer = document.getElementById('quizContainer');
+            const resultContainer = document.getElementById('resultContainer');
+            const loginBtn = document.getElementById('loginBtn');
+            const passwordInput = document.getElementById('password');
+            const errorMessage = document.getElementById('errorMessage');
+            const questionText = document.getElementById('questionText');
+            const questionImage = document.getElementById('questionImage');
+            const optionsContainer = document.getElementById('optionsContainer');
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            const currentQuestionEl = document.getElementById('currentQuestion');
+            const totalQuestionsEl = document.getElementById('totalQuestions');
+            const timerEl = document.getElementById('timer');
+            const progressBar = document.getElementById('progressBar');
+            const resultScore = document.getElementById('resultScore');
+            const resultMessage = document.getElementById('resultMessage');
+            const restartBtn = document.getElementById('restartBtn');
+            const emailBtn = document.getElementById('emailBtn');
+            const subjectTag = document.getElementById('subjectTag');
+
+            // === STATE ===
+            let currentQuestionIndex = 0;
+            let userAnswers = [];
+            let shuffledQuestions = [];
+            let timeLeft = 30 * 60; // 30 minutes
+            let timerInterval;
+
+            // === INITIALIZATION ===
+            function init() {
+                // Add event listeners
+                loginBtn.addEventListener('click', handleLogin);
+                prevBtn.addEventListener('click', prevQuestion);
+                nextBtn.addEventListener('click', nextQuestion);
+                restartBtn.addEventListener('click', restartQuiz);
+                emailBtn.addEventListener('click', sendScoreToEmail);
+                
+                // Focus on password field
+                passwordInput.focus();
+                
+                // Prevent form submission on Enter
+                passwordInput.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                        handleLogin();
+                    }
+                });
+                
+                // Add accessibility
+                document.addEventListener('keydown', (e) => {
+                    if (e.key === 'ArrowLeft' && !prevBtn.disabled) {
+                        e.preventDefault();
+                        prevQuestion();
+                    }
+                    if (e.key === 'ArrowRight' && currentQuestionIndex < shuffledQuestions.length - 1) {
+                        e.preventDefault();
+                        nextQuestion();
+                    }
+                });
+            }
+
+            // === LOGIN HANDLER ===
+            function handleLogin() {
+                if (passwordInput.value.trim() === 'apex123') {
+                    errorMessage.style.display = 'none';
+                    startQuiz();
+                } else {
+                    errorMessage.style.display = 'block';
+                    passwordInput.classList.add('error');
+                    setTimeout(() => {
+                        passwordInput.classList.remove('error');
+                    }, 2000);
+                }
+            }
+
+            // === START QUIZ ===
+            function startQuiz() {
+                // Shuffle questions
+                shuffledQuestions = [...quizData].sort(() => Math.random() - 0.5);
+                currentQuestionIndex = 0;
+                userAnswers = Array(shuffledQuestions.length).fill(null);
+                timeLeft = 30 * 60;
+                
+                // Update UI
+                totalQuestionsEl.textContent = shuffledQuestions.length;
+                showQuestion();
+                
+                // Start timer
+                startTimer();
+                
+                // Hide login, show quiz
+                loginPage.style.display = 'none';
+                quizContainer.style.display = 'block';
+                
+                // Add animation
+                quizContainer.classList.add('fade-in');
+                
+                // Focus on first question
+                setTimeout(() => {
+                    const firstOption = document.querySelector('.option input');
+                    if (firstOption) firstOption.focus();
+                }, 100);
+            }
+
+            // === TIMER ===
+            function startTimer() {
+                clearInterval(timerInterval);
+                timerInterval = setInterval(() => {
+                    timeLeft--;
+                    
+                    if (timeLeft <= 0) {
+                        clearInterval(timerInterval);
+                        showResults();
+                        return;
+                    }
+                    
+                    const minutes = Math.floor(timeLeft / 60);
+                    const seconds = timeLeft % 60;
+                    timerEl.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                }, 1000);
+            }
+
+            // === SHOW QUESTION ===
+            function showQuestion() {
+                const question = shuffledQuestions[currentQuestionIndex];
+                
+                // Update question
+                questionText.textContent = question.question;
+                currentQuestionEl.textContent = currentQuestionIndex + 1;
+                
+                // Handle image
+                if (question.image) {
+                    questionImage.src = question.image;
+                    questionImage.style.display = 'block';
+                } else {
+                    questionImage.style.display = 'none';
+                }
+                
+                // Update subject tag
+                const subjectLabels = {
+                    'english': { text: 'English', class: 'english-tag' },
+                    'biology': { text: 'Biology', class: 'biology-tag' },
+                    'chemistry': { text: 'Chemistry', class: 'chemistry-tag' },
+                    'physics': { text: 'Physics', class: 'physics-tag' },
+                    'maths': { text: 'Mathematics', class: 'maths-tag' }
+                };
+                
+                const tag = subjectLabels[question.subject];
+                subjectTag.textContent = tag.text;
+                subjectTag.className = `subject-tag ${tag.class}`;
+                
+                // Clear options
+                optionsContainer.innerHTML = '';
+                
+                // Create options
+                question.options.forEach((option, index) => {
+                    const optionEl = document.createElement('div');
+                    optionEl.className = 'option';
+                    if (userAnswers[currentQuestionIndex] === index) {
+                        optionEl.classList.add('selected');
+                    }
+                    
+                    optionEl.innerHTML = `
+                        <input type="radio" name="option" id="option${index}" 
+                               ${userAnswers[currentQuestionIndex] === index ? 'checked' : ''}>
+                        <label for="option${index}">${option}</label>
+                    `;
+                    
+                    optionEl.querySelector('input').addEventListener('change', () => {
+                        userAnswers[currentQuestionIndex] = index;
+                        updateOptionSelection();
+                        updateProgressBar();
+                    });
+                    
+                    optionsContainer.appendChild(optionEl);
+                });
+                
+                // Update navigation
+                prevBtn.disabled = currentQuestionIndex === 0;
+                nextBtn.textContent = currentQuestionIndex === shuffledQuestions.length - 1 ? 'Submit' : 'Next';
+                
+                // Update progress bar
+                updateProgressBar();
+                
+                // Focus on first option
+                setTimeout(() => {
+                    const firstInput = document.querySelector(`#option0`);
+                    if (firstInput) firstInput.focus();
+                }, 50);
+            }
+
+            // === UPDATE OPTION SELECTION ===
+            function updateOptionSelection() {
+                const options = document.querySelectorAll('.option');
+                options.forEach((option, index) => {
+                    if (userAnswers[currentQuestionIndex] === index) {
+                        option.classList.add('selected');
+                    } else {
+                        option.classList.remove('selected');
+                    }
+                });
+            }
+
+            // === UPDATE PROGRESS BAR ===
+            function updateProgressBar() {
+                const progress = ((currentQuestionIndex) / shuffledQuestions.length) * 100;
+                progressBar.style.width = `${progress}%`;
+            }
+
+            // === NEXT QUESTION ===
+            function nextQuestion() {
+                if (currentQuestionIndex < shuffledQuestions.length - 1) {
+                    currentQuestionIndex++;
+                    showQuestion();
+                } else {
+                    clearInterval(timerInterval);
+                    showResults();
+                }
+            }
+
+            // === PREVIOUS QUESTION ===
+            function prevQuestion() {
+                if (currentQuestionIndex > 0) {
+                    currentQuestionIndex--;
+                    showQuestion();
+                }
+            }
+
+            // === SHOW RESULTS ===
+            function showResults() {
+                // Count correct answers
+                let correctAnswers = 0;
+                for (let i = 0; i < shuffledQuestions.length; i++) {
+                    if (userAnswers[i] === shuffledQuestions[i].answer) {
+                        correctAnswers++;
+                    }
+                }
+                
+                const score = Math.round((correctAnswers / shuffledQuestions.length) * 100);
+                
+                // Update result
+                resultScore.textContent = `${score}%`;
+                
+                // Set message
+                if (score >= 80) {
+                    resultMessage.textContent = `Outstanding! You scored ${score}% on extreme difficulty. You're exam-ready!`;
+                } else if (score >= 60) {
+                    resultMessage.textContent = `Excellent performance! ${score}% on extreme questions shows strong mastery.`;
+                } else if (score >= 40) {
+                    resultMessage.textContent = `Good attempt at extreme difficulty. ${score}% shows potential with more practice.`;
+                } else {
+                    resultMessage.textContent = `Challenging questions! ${score}% is a starting point. Review concepts and try again.`;
+                }
+                
+                // Show result screen
+                quizContainer.style.display = 'none';
+                resultContainer.style.display = 'flex';
+                resultContainer.classList.add('fade-in');
+            }
+
+            // === SEND SCORE TO EMAIL ===
+            function sendScoreToEmail() {
+                let correctAnswers = 0;
+                for (let i = 0; i < shuffledQuestions.length; i++) {
+                    if (userAnswers[i] === shuffledQuestions[i].answer) {
+                        correctAnswers++;
+                    }
+                }
+                
+                const score = Math.round((correctAnswers / shuffledQuestions.length) * 100);
+                const subject = "My Apex TUTORIAL Extreme JAMB Score";
+                const body = `Hello,\n\nI just completed the Apex TUTORIAL Extreme JAMB Practice Test.\n\nMy Score: ${score}%\n\nTotal Questions: ${shuffledQuestions.length}\nCorrect Answers: ${correctAnswers}\n\nBest regards,\n[Your Name]`;
+
+                const mailtoLink = `mailto:oriaifodominion@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+                window.location.href = mailtoLink;
+            }
+
+            // === RESTART QUIZ ===
+            function restartQuiz() {
+                currentQuestionIndex = 0;
+                userAnswers = Array(shuffledQuestions.length).fill(null);
+                timeLeft = 30 * 60;
+                showQuestion();
+                startTimer();
+                
+                resultContainer.style.display = 'none';
+                quizContainer.style.display = 'block';
+            }
+
+            // === INIT ===
+            document.addEventListener('DOMContentLoaded', init);
+        </script>
+</body>
+</html>
